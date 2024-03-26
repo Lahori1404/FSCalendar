@@ -16,7 +16,7 @@
 @interface FSCalendarStickyHeader ()
 
 @property (weak  , nonatomic) UIView  *contentView;
-@property (weak  , nonatomic) UIView  *bottomBorder;
+@property (weak  , nonatomic) UIView  *topBorder;
 @property (weak  , nonatomic) FSCalendarWeekdayView *weekdayView;
 
 @end
@@ -45,8 +45,8 @@
         view = [[UIView alloc] initWithFrame:CGRectZero];
         view.backgroundColor = FSCalendarStandardLineColor;
         [_contentView addSubview:view];
-        self.bottomBorder = view;
-        
+        self.topBorder = view;
+
         FSCalendarWeekdayView *weekdayView = [[FSCalendarWeekdayView alloc] init];
         [self.contentView addSubview:weekdayView];
         self.weekdayView = weekdayView;
@@ -66,13 +66,13 @@
     
     self.weekdayView.frame = CGRectMake(0, _contentView.fs_height-weekdayHeight-weekdayMargin, self.contentView.fs_width, weekdayHeight);
     
-    CGFloat titleHeight = [@"1" sizeWithAttributes:@{NSFontAttributeName:self.calendar.appearance.headerTitleFont}].height*1.5 + weekdayMargin*3;
-    
-    _bottomBorder.frame = CGRectMake(0, _contentView.fs_height-weekdayHeight-weekdayMargin*2, _contentView.fs_width, 1.0);
+    CGFloat titleHeight = [@"1" sizeWithAttributes:@{NSFontAttributeName:self.calendar.appearance.headerTitleFont}].height*1.5 + weekdayMargin*3 + 18;
+
+    _topBorder.frame = CGRectMake(0, _contentView.fs_height-weekdayHeight-weekdayMargin*2 - 38, _contentView.fs_width, 1.0);
 
     CGPoint titleHeaderOffset = self.calendar.appearance.headerTitleOffset;
     _titleLabel.frame = CGRectMake(titleHeaderOffset.x,
-                                   titleHeaderOffset.y+_bottomBorder.fs_bottom-titleHeight-weekdayMargin,
+                                   titleHeaderOffset.y+_topBorder.fs_bottom-titleHeight-weekdayMargin + 52,
                                    titleWidth,
                                    titleHeight);
 }
@@ -95,7 +95,7 @@
     _titleLabel.font = self.calendar.appearance.headerTitleFont;
     _titleLabel.textColor = self.calendar.appearance.headerTitleColor;
     _titleLabel.textAlignment = self.calendar.appearance.headerTitleAlignment;
-    _bottomBorder.backgroundColor = self.calendar.appearance.headerSeparatorColor;
+    _topBorder.backgroundColor = self.calendar.appearance.headerSeparatorColor;
     [self.weekdayView configureAppearance];
 }
 
